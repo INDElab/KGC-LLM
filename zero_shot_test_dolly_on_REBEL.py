@@ -28,12 +28,13 @@ def main():
         input_variables=["input_text"],
         template= """A triple has three components: subject, relations, object. Extract triples from the given text in the following format: ['subject', 'relation', 'object'] and put them in a list.
         Text to extract triples: {input_text} \n Extracted Triples: """)
+    
     print("Loading model...")
-    #generate_text = pipeline(model="databricks/dolly-v2-3b", torch_dtype=torch.bfloat16,
-    #                        trust_remote_code=True, device_map="auto", return_full_text=True)
-    generate_text = pipeline(model="google/flan-t5-large", 
-                         torch_dtype=torch.bfloat16, trust_remote_code=True,  
-                         device_map="auto")
+    generate_text = pipeline(model="databricks/dolly-v2-3b", torch_dtype=torch.bfloat16,
+                           trust_remote_code=True, device_map="auto", return_full_text=True)
+    #generate_text = pipeline(model="google/flan-t5-large", 
+       #                  torch_dtype=torch.bfloat16, trust_remote_code=True,  
+        #                 device_map="auto")
                          
     hf_pipeline = HuggingFacePipeline(pipeline=generate_text)
     llm_chain = LLMChain(llm=hf_pipeline, prompt=prompt)
@@ -46,8 +47,8 @@ def main():
     print(f"Number of test instances: {len(test_data)}")
     
     print("Running zero-shot extraction...")
-    for d in test_data[:5]:
-    #for d in test_data:
+    #for d in test_data[:5]:
+    for d in test_data:
         input_text = d["input"]
         extraction = llm_chain.run(input_text=input_text)
         extraction_dict = {"model_name": "google/flan-t5-large",

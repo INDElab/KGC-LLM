@@ -10,9 +10,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import FewShotPromptTemplate
 import argparse
 
-rebel_path = "/home/finapolat/GenIE/data/rebel"
-
-extraction_path = "/home/finapolat/KGC-LLM/extractions"
 
 def get_data_from_rebel_files(rebel_path, file_name):
     data = []
@@ -76,11 +73,11 @@ def main():
                         )
     
     print("Loading model...")
-    #generate_text = pipeline(model="databricks/dolly-v2-3b", torch_dtype=torch.bfloat16,
-    #                        trust_remote_code=True, device_map="auto", return_full_text=True)
-    generate_text = pipeline(model="google/flan-t5-large", 
-                         torch_dtype=torch.bfloat16, trust_remote_code=True,  
-                         device_map="auto")
+    generate_text = pipeline(model="databricks/dolly-v2-3b", torch_dtype=torch.bfloat16,
+                            trust_remote_code=True, device_map="auto", return_full_text=True)
+    #generate_text = pipeline(model="google/flan-t5-large", 
+       #                  torch_dtype=torch.bfloat16, trust_remote_code=True,  
+        #                 device_map="auto")
                          
     hf_pipeline = HuggingFacePipeline(pipeline=generate_text)
     
@@ -94,8 +91,8 @@ def main():
     outfile = open(os.path.join(args.extraction_path, "fewshot_extraction_dolly_on_REBEL.txt"), "w", encoding="utf-8")
     
     print("Starting few-shot extraction...")
-    for d in test_data[:5]:
-    #for d in test_data:
+    #for d in test_data[:5]:
+    for d in test_data:
         input_text = d["input"]
         extraction = llm_fewshot_chain.run(input=input_text)
         extraction_dict = {"model_name": "google/flan-t5-large",
