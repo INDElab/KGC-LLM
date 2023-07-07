@@ -6,7 +6,7 @@ random.seed(42)
 
 
 
-def create_sample_from_testfile(test_file):
+def create_sample_from_testfile(test_file, sample_size=100):
     """read test file, get a random sample of 100, return the sample"""
     
     data_list = []
@@ -17,7 +17,7 @@ def create_sample_from_testfile(test_file):
             
     print(f"Total number of test instances: {len(data_list)}")
     
-    sample_list = random.sample(data_list, 100)
+    sample_list = random.sample(data_list, sample_size)
     
     print(f"Number of sample instances: {len(sample_list)}")
     
@@ -38,8 +38,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--testfile", type=str, default="/home/finapolat/GenIE/data/rebel/en_test.jsonl")
     parser.add_argument("--outfolder", type=str, default="/home/finapolat/KGC-LLM/sample_data/sample_from_testdata_for_annotations.jsonl")
+    parser.add_argument("--sample_size", type=int, default=100)
     args = parser.parse_args()
-    sample_list = create_sample_from_testfile(test_file=args.testfile)
+    sample_list = create_sample_from_testfile(test_file=args.testfile, sample_size=args.sample_size)
     write_the_sample(sample_list, args.outfolder)
 
 
