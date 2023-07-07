@@ -37,7 +37,7 @@ def main():
     print("Creating sample from test file...")
     parser = argparse.ArgumentParser()
     parser.add_argument("--testfile", type=str, default="/home/finapolat/GenIE/data/rebel/en_test.jsonl")
-    parser.add_argument("--outfolder", type=str, default="/home/finapolat/KGC-LLM/sample_from_testdata_for_annotations.jsonl")
+    parser.add_argument("--outfolder", type=str, default="/home/finapolat/KGC-LLM/sample_data/sample_from_testdata_for_annotations.jsonl")
     args = parser.parse_args()
     sample_list = create_sample_from_testfile(test_file=args.testfile)
     write_the_sample(sample_list, args.outfolder)
